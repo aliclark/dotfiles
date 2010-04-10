@@ -22,7 +22,7 @@ of an error, just add the package to a list of missing packages."
     (file-error nil)))
 
 (defmacro try-run (feature &rest code)
-  `(if (try-require ,feature) (progn ,@code)))
+  `(when (try-require ,feature) (progn ,@code)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -146,6 +146,12 @@ of an error, just add the package to a list of missing packages."
 (try-run 'expresso
   (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
   (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-run 'ido
+  (ido-mode t)
+  (setq ido-enable-flex-matching t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
