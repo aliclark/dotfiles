@@ -116,10 +116,9 @@ of an error, just add the package to a list of missing packages."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d/clojure-mode")
-(try-require 'clojure-auto)
-
-(autoload 'clojure-mode "clojure-mode" "A major mode for Clojure" t)
-(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+(try-run 'clojure-auto
+  (autoload 'clojure-mode "clojure-mode" "A major mode for Clojure" t)
+  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -137,6 +136,16 @@ of an error, just add the package to a list of missing packages."
 
     (autoload 'git-blame-mode "git-blame"
       "Minor mode for incremental blame for Git." t)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-require 'php-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-run 'expresso
+  (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
+  (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
