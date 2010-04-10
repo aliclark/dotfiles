@@ -9,7 +9,7 @@ do
     then
         dotbase="${BASH_REMATCH[1]}"
 
-        if [ -f ~/.$dotbase ]
+        if [ -e ~/.$dotbase ]
         then
             echo "Moving ~/.$dotbase to ~/.$dotbase.backup"
             mv ~/.$dotbase ~/.$dotbase.backup
