@@ -1,0 +1,22 @@
+#/bin/bash
+
+dotmatch='\./(.+)\.(.+)'
+dotbase=''
+
+for file in ./*.*
+do
+    if [[ $file =~ $dotmatch ]]
+    then
+        dotbase="${BASH_REMATCH[1]}"
+
+        if [ -f ~/.$dotbase ]
+        then
+            echo "Moving ~/.$dotbase to ~/.$dotbase.backup"
+            mv ~/.$dotbase ~/.$dotbase.backup
+        fi
+
+        ln -s `pwd`/$file ~/.$dotbase
+        echo "$dotbase installed."
+    fi
+done
+
