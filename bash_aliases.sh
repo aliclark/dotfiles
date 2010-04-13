@@ -7,7 +7,7 @@ alias cdl='cd /usr/local/bin'
 alias cd..='cd ..'
 alias ..='cd ..'
 
-alias gcam='git commit --all -m '
+alias gcam='git commit --all -m'
 alias gpull='git pull origin master'
 alias gpush='git push origin master'
 
@@ -15,7 +15,10 @@ alias sudo='sudo '
 
 alias gimme='sudo apt-get install'
 
-alias rm='rm --interactive=always'
+alias rm='rm --interactive=once'
+alias rm='cp --interactive'
+alias rm='mv --interactive'
+
 alias rm-downloads="rm --recursive --force ~/Desktop/* && \
                     rm --recursive --force ~/Downloads/*"
 
