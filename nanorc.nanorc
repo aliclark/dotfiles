@@ -8,7 +8,6 @@ set quickblank
 set wordbounds
 set autoindent
 set cut
-set mouse
 set nowrap
 set nohelp
 
