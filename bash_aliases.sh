@@ -15,7 +15,7 @@ alias sudo='sudo '
 
 alias gimme='sudo apt-get install'
 
-alias rm='rm --interactive=once'
+alias rm='rm --interactive'
 alias cp='cp --interactive'
 alias mv='mv --interactive'
 
