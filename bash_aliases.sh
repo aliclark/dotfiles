@@ -2,6 +2,7 @@
 alias ll='ls -l'
 alias la='ls --almost-all'
 alias l='ls -C --clasify'
+alias lla='ll --almost-all'
 
 alias cdl='cd /usr/local/bin'
 alias cd..='cd ..'
