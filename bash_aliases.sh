@@ -17,7 +17,6 @@ alias sudo='sudo '
 alias gimme='sudo apt-get install'
 
 alias rm='rm --interactive'
-alias cp='cp --interactive'
 alias mv='mv --interactive'
 
 alias rm-downloads="rm --recursive --force ~/Desktop/* && \
