@@ -90,7 +90,7 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'default nil :height 90)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -123,7 +123,6 @@ of an error, just add the package to a list of missing packages."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-goodies-el/")
-(try-run 'color-theme (color-theme-billw))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -136,6 +135,10 @@ of an error, just add the package to a list of missing packages."
 
     (autoload 'git-blame-mode "git-blame"
       "Minor mode for incremental blame for Git." t)))
+
+(setq-all
+  vc-follow-sym       t
+  vc-suppress-confirm t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -152,6 +155,14 @@ of an error, just add the package to a list of missing packages."
 (try-run 'ido
   (ido-mode t)
   (setq ido-enable-flex-matching t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Maximise - doesn't currently use up all of its space when maximised
+
+;(interactive)
+;(x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+;(x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
