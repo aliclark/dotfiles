@@ -1,0 +1,3 @@
+[user]
+	name = Ali Clark
+	email = emailaliclark@gmail.com
