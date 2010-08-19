@@ -1,27 +1,4 @@
 
-{-
-
--- other imports
-import XMonad
-
-
-main = xmonad defaultConfig {
-    -- skipped
-      layoutHook = smartBorders (yourExistingLayoutHook) -- Don't put borders on fullFloatWindows
-    , manageHook =  myManageHooks
-    }
-
-myManageHooks = composeAll
--- Allows focusing other monitors without killing the fullscreen
---  [ isFullscreen --> (doF W.focusDown <+> doFullFloat)
-
--- Single monitor setups, or if the previous hook doesn't work
-    [ isFullscreen --> doFullFloat
-    -- skipped
-    ]
-
--}
-
 --
 -- xmonad example config file for xmonad-0.9
 --
@@ -46,13 +23,18 @@ import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
  
-
-
-
+-- for fullscreen
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders
 
+-- for dzen2
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
 
+-- utility
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.EZConfig(additionalKeys)
+import System.IO
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -245,7 +227,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = Mirror tiled ||| Full ||| tiled
+myLayout = (avoidStruts (tiled ||| Mirror tiled ||| Full)) ||| Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
@@ -284,8 +266,9 @@ myManageHook = composeAll
       --  [ isFullscreen --> (doF W.focusDown <+> doFullFloat)
 
       -- Single monitor setups, or if the previous hook doesn't work
-    , isFullscreen --> doFullFloat
+--    , isFullscreen --> doFullFloat
       -- skipped
+    , isFullscreen --> (doF W.focusDown <+> doFullFloat)
 
     ]
  
@@ -315,8 +298,9 @@ myEventHook = mempty
 -- It will add EWMH logHook actions to your custom log hook by
 -- combining it with ewmhDesktopsLogHook.
 --
-myLogHook = return ()
+-- myLogHook = return ()
  
+
 ------------------------------------------------------------------------
 -- Startup hook
  
@@ -338,15 +322,9 @@ myStartupHook = return ()
  
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
- 
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = defaultConfig {
+main = do
+  xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+  xmonad $  defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -363,10 +341,18 @@ defaults = defaultConfig {
         mouseBindings      = myMouseBindings,
  
       -- hooks, layouts
-        layoutHook         = smartBorders (myLayout),
-        manageHook         = myManageHook,
+        layoutHook         = (smartBorders (myLayout)),
+--        manageHook         = myManageHook,
+        manageHook         = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
+                             <+> manageHook defaultConfig,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook,
+        logHook            = dynamicLogWithPP $ xmobarPP
+                             { ppOutput = hPutStrLn xmproc
+                             , ppTitle = xmobarColor "green" "" . shorten 50
+                             },
         startupHook        = myStartupHook
-    }
+    } `additionalKeys`
+           [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
+           , ((0, xK_Print), spawn "scrot")
+           ]
 

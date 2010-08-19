@@ -33,3 +33,6 @@ alias css="cd ~/.wine/drive_c/Program\ Files/Steam && \
 alias fulltilt='wine "C:\\Program Files\\Full Tilt Poker\\FullTiltPoker.exe" &'
 alias spotify='wine "C:\\Program Files\\Spotify\\spotify.exe" &'
 
+alias psgrep='ps aux | grep '
+alias emacs='emacs -nw'
+

@@ -166,6 +166,18 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; Attempts to get emacs to automatically open in server
+
+;(server-start)
+
+;(add-hook 'after-init-hook 'server-start)
+;(add-hook 'server-done-hook
+;  (lambda ()
+;    (shell-command
+;      "screen -r -X select `cat ~/tmp/emacsclient-caller`")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (message ".emacs loaded in %ds"
   (destructuring-bind (hi lo ms) (current-time)
     (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
