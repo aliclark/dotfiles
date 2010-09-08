@@ -15,6 +15,7 @@ alias gpush='git push origin master'
 alias sudo='sudo '
 
 alias gimme='sudo apt-get install'
+alias search='aptitude search'
 
 alias rm='rm --interactive'
 alias mv='mv --interactive'
@@ -31,7 +32,7 @@ alias cod="cd ~/.wine/drive_c/Program\ Files/Steam && \
 alias css="cd ~/.wine/drive_c/Program\ Files/Steam && \
            WINEDEBUG=-all wine steam -applaunch 240 -dxlevel 80 &"
 alias fulltilt='wine "C:\\Program Files\\Full Tilt Poker\\FullTiltPoker.exe" &'
-alias spotify='wine "C:\\Program Files\\Spotify\\spotify.exe" &'
+#alias spotify='wine "C:\\Program Files\\Spotify\\spotify.exe" &'
 
 alias psgrep='ps aux | grep '
 alias emacs='emacs -nw'

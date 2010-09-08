@@ -227,7 +227,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = (avoidStruts (tiled ||| Mirror tiled ||| Full)) ||| Full
+myLayout = (avoidStruts (Full ||| tiled ||| Mirror tiled )) ||| Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = Tall nmaster delta ratio
@@ -324,6 +324,7 @@ myStartupHook = return ()
 --
 main = do
   xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+  trayer <- spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --tint 0x191970 --height 12"
   xmonad $  defaultConfig {
       -- simple stuff
         terminal           = myTerminal,

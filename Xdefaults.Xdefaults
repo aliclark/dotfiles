@@ -4,3 +4,5 @@ XTerm*foreground: green
 XTerm*highlightSelection: true
 XTerm*cutNewline: false
 
+XTerm*metaSendsEscape: true
+XTerm*eightBitInput: false
