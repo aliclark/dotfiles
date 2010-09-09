@@ -19,6 +19,14 @@ if [ -d "$HOME/local/bin" ]; then
     PATH="$HOME/local/bin:$PATH"
 fi
 
+if [ -d "$HOME/bin" ]; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+if [ -f "$HOME/.profile-ant" ]; then
+  . "$HOME/.profile-ant"
+fi
+
 export PATH
 
 ###############################################################################
