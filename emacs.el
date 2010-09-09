@@ -252,7 +252,7 @@ of an error, just add the package to a list of missing packages."
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
-  (define-key js2-mode-map [(meta control \;)] 
+  (define-key js2-mode-map [(meta control \;)]
     '(lambda()
        (interactive)
        (insert "/* -----[ ")

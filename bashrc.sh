@@ -195,10 +195,16 @@ if [ -n "$DISPLAY" ]; then
     fi
   fi
 else
+
+if [ -z "1" ]; then # temporarily disable screen in vterm
+
   if [ $SHLVL -eq "1" ]; then
     if [ -z "$STARTED_LOGIN_SCREEN" ]; then
       export STARTED_LOGIN_SCREEN=1
       screen
     fi
   fi
+
+fi
+
 fi

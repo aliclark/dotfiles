@@ -22,3 +22,8 @@ define_webjump("subbit", "http://www.reddit.com/r/%s");
 define_webjump("hn", "http://news.ycombinator.com/");
 
 define_webjump("gmail", "https://mail.google.com/");
+
+define_webjump("antwiki", "http://wiki/");
+define_webjump("antmail", "http://cam-mail2k7/owa/");
+
+define_webjump("skyjira", "http://jira/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+CON+AND+resolution+%3D+Unresolved+ORDER+BY+due+ASC%2C+priority+DESC%2C+created+ASC&mode=hide");
