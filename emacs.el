@@ -66,9 +66,10 @@ of an error, just add the package to a list of missing packages."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq-all
-  scroll-margin 5
-  scroll-conservatively 100000
-  scroll-preserve-screen-position 1)
+;  scroll-margin 5
+;  scroll-conservatively 100000
+;  scroll-preserve-screen-position 1
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
