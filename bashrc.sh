@@ -39,6 +39,8 @@ export HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000
 
 ###############################################################################
 # Coloring output

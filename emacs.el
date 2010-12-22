@@ -279,6 +279,15 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun my-p4open ()
+  (interactive "")
+  (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 edit \"`basename '" buffer-file-name "'`\""))
+  (revert-buffer t t))
+
+(global-set-key (kbd "C-c v") 'my-p4open)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (message ".emacs loaded in %ds"
   (destructuring-bind (hi lo ms) (current-time)
     (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
