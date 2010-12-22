@@ -68,7 +68,7 @@ of an error, just add the package to a list of missing packages."
 (setq-all
   scroll-margin 5
   scroll-conservatively 100000
-  scroll-preserve-screen-position 1)
+  scroll-preserve-screen-position 0)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -275,6 +275,15 @@ of an error, just add the package to a list of missing packages."
   (message "My JS2 hook"))
 
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun my-p4open ()
+  (interactive "")
+  (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 edit \"`basename '" buffer-file-name "'`\""))
+  (revert-buffer t t))
+
+(global-set-key (kbd "C-c v") 'my-p4open)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
