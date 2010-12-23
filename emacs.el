@@ -66,9 +66,9 @@ of an error, just add the package to a list of missing packages."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq-all
-;  scroll-margin 5
-;  scroll-conservatively 100000
-;  scroll-preserve-screen-position 1
+  scroll-margin 5
+;;  scroll-conservatively 100000
+;;  scroll-preserve-screen-position 0
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -281,10 +281,43 @@ of an error, just add the package to a list of missing packages."
 
 (defun my-p4open ()
   (interactive "")
-  (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 edit \"`basename '" buffer-file-name "'`\""))
-  (revert-buffer t t))
+  (let ((o (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 edit \"`basename '" buffer-file-name "'`\""))))
+    (revert-buffer t t)
+    (message o)))
 
-(global-set-key (kbd "C-c v") 'my-p4open)
+(global-set-key (kbd "C-c C-x C-f") 'my-p4open)
+
+(defun my-p4revert ()
+  (interactive "")
+  (let ((o (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 revert \"`basename '" buffer-file-name "'`\""))))
+    (revert-buffer t t)
+    (message o)))
+
+(global-set-key (kbd "C-c C-x C-k") 'my-p4revert)
+
+(defun my-diff-contents-against (f)
+  (let ((bs (buffer-string)) (tmp (make-temp-file "diff")))
+    (find-file tmp)
+    (insert bs)
+    (save-buffer)
+    (kill-buffer (current-buffer))
+    (let ((o (shell-command-to-string (concat "diff " f " " tmp))))
+      (display-message-or-buffer o))))
+
+(defun my-p4diff ()
+  (interactive "")
+  (let* ((tmp1 (make-temp-file "p4diff"))
+         (o1 (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 print -o " tmp1 " -q \"`basename '" buffer-file-name "'`\""))))
+    (message o1)
+    (my-diff-contents-against tmp1)))
+
+(global-set-key (kbd "C-c C-d") 'my-p4diff)
+
+(defun my-diff ()
+  (interactive "")
+  (my-diff-contents-against buffer-file-name))
+
+(global-set-key (kbd "C-c d") 'my-diff)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
