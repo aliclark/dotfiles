@@ -54,7 +54,7 @@ of an error, just add the package to a list of missing packages."
   tab-width                4
   c-basic-offset           4
   c-default-style          '((java-mode . "java") (other . "bsd"))
-  show-trailing-whitespace t)
+  show-trailing-whitespace nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -110,7 +110,7 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;(try-run 'highlight-80+ (global-highlight-80+-mode 1))
+;(try-run 'highlight-80+ (global-highlight-80+-mode nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -321,9 +321,20 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq browse-url-browser-function 'w3m-browse-url)
+(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+
+;; optional keyboard short-cut
+(global-set-key "\C-xm" 'browse-url-at-point)
+
+(setq w3m-use-cookies t)
+
+(setq w3m-quickstart nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (message ".emacs loaded in %ds"
   (destructuring-bind (hi lo ms) (current-time)
     (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
