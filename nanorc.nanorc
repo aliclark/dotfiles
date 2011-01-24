@@ -9,6 +9,7 @@ set wordbounds
 set cut
 set nowrap
 set nohelp
+set nonewlines
 
 include "/usr/share/nano/asm.nanorc"
 include "/usr/share/nano/c.nanorc"
