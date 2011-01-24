@@ -302,6 +302,7 @@ of an error, just add the package to a list of missing packages."
     (save-buffer)
     (kill-buffer (current-buffer))
     (let ((o (shell-command-to-string (concat "diff " f " " tmp))))
+      (shell-command-to-string (concat "rm -f " tmp))
       (display-message-or-buffer o))))
 
 (defun my-p4diff ()
@@ -309,9 +310,35 @@ of an error, just add the package to a list of missing packages."
   (let* ((tmp1 (make-temp-file "p4diff"))
          (o1 (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 print -o " tmp1 " -q \"`basename '" buffer-file-name "'`\""))))
     (message o1)
-    (my-diff-contents-against tmp1)))
+    (my-diff-contents-against tmp1)
+    (shell-command-to-string (concat "rm -f " tmp1))))
 
 (global-set-key (kbd "C-c C-d") 'my-p4diff)
+
+(defun my-p4change ()
+  (interactive "")
+  (let* ((tmp1 (make-temp-file "p4change"))
+          (name buffer-file-name)
+          (o1 (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 change -o"))))
+    (find-file tmp1)
+    (insert (concat name "\n"))
+    (insert o1)))
+
+(global-set-key (kbd "C-c C-x o") 'my-p4change)
+
+;; Quite unsafe ATM...
+(defun my-p4submit ()
+  (interactive "")
+
+  ;; we need to get hold of the real dirname..... buffer-file-name is a tempfile
+
+  (let* ((f buffer-filename)
+         (o1 (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 change -i < " f))))
+    ;; o1="Change 39006 created with 1 open file(s) fixing 1 job(s)."
+    (shell-command-to-string (concat "rm -f " f))
+    (message (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 submit -c ")))))
+
+(global-set-key (kbd "C-c C-x o") 'my-p4change)
 
 (defun my-diff ()
   (interactive "")
@@ -326,4 +353,21 @@ of an error, just add the package to a list of missing packages."
     (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(js2-allow-keywords-as-property-names nil)
+ '(js2-auto-insert-catch-block nil)
+ '(js2-bounce-indent-p t)
+ '(js2-cleanup-whitespace t)
+ '(js2-include-gears-externs nil)
+ '(js2-include-rhino-externs nil)
+ '(js2-mirror-mode nil))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
