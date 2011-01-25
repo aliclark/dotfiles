@@ -54,7 +54,7 @@ of an error, just add the package to a list of missing packages."
   tab-width                4
   c-basic-offset           4
   c-default-style          '((java-mode . "java") (other . "bsd"))
-  show-trailing-whitespace t)
+  show-trailing-whitespace nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -302,6 +302,7 @@ of an error, just add the package to a list of missing packages."
     (save-buffer)
     (kill-buffer (current-buffer))
     (let ((o (shell-command-to-string (concat "diff " f " " tmp))))
+      (shell-command-to-string (concat "rm -f " tmp))
       (display-message-or-buffer o))))
 
 (defun my-p4diff ()
@@ -309,9 +310,35 @@ of an error, just add the package to a list of missing packages."
   (let* ((tmp1 (make-temp-file "p4diff"))
          (o1 (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 print -o " tmp1 " -q \"`basename '" buffer-file-name "'`\""))))
     (message o1)
-    (my-diff-contents-against tmp1)))
+    (my-diff-contents-against tmp1)
+    (shell-command-to-string (concat "rm -f " tmp1))))
 
 (global-set-key (kbd "C-c C-d") 'my-p4diff)
+
+(defun my-p4change ()
+  (interactive "")
+  (let* ((tmp1 (make-temp-file "p4change"))
+          (name buffer-file-name)
+          (o1 (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 change -o"))))
+    (find-file tmp1)
+    (insert (concat name "\n"))
+    (insert o1)))
+
+(global-set-key (kbd "C-c C-x o") 'my-p4change)
+
+;; Quite unsafe ATM...
+(defun my-p4submit ()
+  (interactive "")
+
+  ;; we need to get hold of the real dirname..... buffer-file-name is a tempfile
+
+  (let* ((f buffer-filename)
+         (o1 (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 change -i < " f))))
+    ;; o1="Change 39006 created with 1 open file(s) fixing 1 job(s)."
+    (shell-command-to-string (concat "rm -f " f))
+    (message (shell-command-to-string (concat "cd \"`dirname '" buffer-file-name "'`\" && p4 submit -c ")))))
+
+(global-set-key (kbd "C-c C-x o") 'my-p4change)
 
 (defun my-diff ()
   (interactive "")
@@ -321,9 +348,39 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq browse-url-browser-function 'w3m-browse-url)
+(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+
+;; optional keyboard short-cut
+(global-set-key "\C-xm" 'browse-url-at-point)
+
+(setq w3m-use-cookies t)
+
+(setq w3m-quickstart nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (message ".emacs loaded in %ds"
   (destructuring-bind (hi lo ms) (current-time)
     (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(js2-allow-keywords-as-property-names nil)
+ '(js2-auto-insert-catch-block nil)
+ '(js2-bounce-indent-p t)
+ '(js2-cleanup-whitespace t)
+ '(js2-include-gears-externs nil)
+ '(js2-include-rhino-externs nil)
+ '(js2-mirror-mode nil))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
