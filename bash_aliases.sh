@@ -36,4 +36,3 @@ alias fulltilt='wine "C:\\Program Files\\Full Tilt Poker\\FullTiltPoker.exe" &'
 
 alias psgrep='ps aux | grep '
 alias emacs='emacs -nw'
-

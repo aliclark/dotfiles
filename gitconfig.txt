@@ -3,6 +3,7 @@
 	email = emailaliclark@gmail.com
 [core]
 	editor = emacs
+	filemode = true
 [alias]
 	co = checkout
 	br = branch
