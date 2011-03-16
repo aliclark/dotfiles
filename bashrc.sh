@@ -71,7 +71,7 @@ alias vdir='vdir --color=auto'
 # Coloring for the `grep` program
 
 export GREP_COLOR="1;33"
-alias grep='grep --color=auto --line-number --recursive'
+alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
