@@ -389,3 +389,114 @@ of an error, just add the package to a list of missing packages."
 
 (require 'camelCase)
 (add-hook 'find-file-hook 'camelCase-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun shell-do (&rest x)
+  (shell-command-to-string (mapconcat 'identity x "")))
+
+(defun shell-msg (&rest x)
+  (display-message-or-buffer (apply 'shell-do x)))
+
+(defun string-search-and-replace (search replace string)
+  "Replace all instances of SEARCH with REPLACE in STRING."
+  (replace-regexp-in-string (regexp-quote search) replace string t t))
+
+(defun mypwd ()
+  (let ((p (shell-do "pwd")))
+    (substring p 0 (- (length p) 1))))
+
+(defmacro with-cd (x &rest code)
+  (let ((pd (mypwd)))
+    `(progn
+       (cd ,x)
+       ,@code
+       (cd ,pd))))
+
+(defun get-apps-path ()
+  (let* ((o1 (shell-do "dirname '" buffer-file-name "'"))
+         (o2 (split-string o1 "/preset/")))
+    (if (> (length o2) 1)
+      (concat (car o2) "/preset")
+      nil)))
+
+(defun get-apps-path-part ()
+  (let* ((o1 buffer-file-name)
+         (o2 (split-string o1 "/preset/")))
+    (if (> (length o2) 1)
+      (cadr o2)
+      nil)))
+
+(defun my-apps-tags ()
+  (interactive "")
+
+  (let ((o3 (get-apps-path)))
+    (if o3
+      (with-cd o3
+        (shell-msg "find apps/ library/js -name '*.js' | xargs etags")
+        (if (not (member o3 tags-table-list))
+          (setq tags-table-list (cons o3 tags-table-list))))
+      (message "not in taggable dir"))))
+
+(global-set-key (kbd "C-c e") 'my-apps-tags)
+
+(defun my-debg-print ()
+  (interactive "")
+  (insert (concat "window.debug.log(\"" (read-from-minibuffer "Debug: ") "\");\n")))
+
+(global-set-key (kbd "C-c w") 'my-debg-print)
+
+(setq my-random-base (random 1000))
+(setq my-random-id 0)
+
+(defun my-debg-rand ()
+  (interactive "")
+  (insert (concat "window.debug.log(\"POINT " (number-to-string my-random-base) " " (number-to-string my-random-id) "\");\n"))
+  (setq my-random-id (+ my-random-id 1)))
+
+(global-set-key (kbd "C-c W") 'my-debg-rand)
+
+
+(defun my-reload-emacs ()
+  (interactive "")
+  (load-file "~/.emacs"))
+
+(global-set-key (kbd "C-c r") 'my-reload-emacs)
+
+(defun my-jslint ()
+  (interactive "")
+  (let ((o1 (get-apps-path))
+         (o2 (get-apps-path-part)))
+    (if o1
+      (let ((path (concat "build/jslint/" (string-search-and-replace ".js" ".txt" o2))))
+        (with-cd (concat o1 "/../../builds/generic")
+          (shell-do "rm -f " path)
+          (message "Running JSLint")
+          (compile (concat "PRETTY='' make " path))))
+      (message "not in apps dir"))))
+
+(global-set-key (kbd "C-c j") 'my-jslint)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+(ac-config-default)
+(define-key ac-complete-mode-map "\t" 'ac-complete)
+(define-key ac-complete-mode-map "\r" nil)
+
+(setq ac-auto-start t)
+(setq ac-delay 0.1)
+(setq ac-show-menu-immediately-on-auto-complete t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'p4)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(my-apps-tags)
+
+
