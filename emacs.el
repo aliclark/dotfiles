@@ -360,12 +360,6 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(message ".emacs loaded in %ds"
-  (destructuring-bind (hi lo ms) (current-time)
-    (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -387,8 +381,8 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'camelCase)
-(add-hook 'find-file-hook 'camelCase-mode)
+(try-run 'camelCase
+  (add-hook 'find-file-hook 'camelCase-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -499,4 +493,17 @@ of an error, just add the package to a list of missing packages."
 
 (my-apps-tags)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(try-require 'csharp-mode)
+
+;  (try-run 'flymake-for-csharp
+;    (add-hook 'csharp-mode-hook 'flymake-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(message ".emacs loaded in %ds"
+  (destructuring-bind (hi lo ms) (current-time)
+    (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
