@@ -381,6 +381,11 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(try-run 'camelCase
+  (add-hook 'find-file-hook 'camelCase-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun shell-do (&rest x)
   (shell-command-to-string (mapconcat 'identity x "")))
 
@@ -487,10 +492,6 @@ of an error, just add the package to a list of missing packages."
 
 
 (my-apps-tags)
-
-
-(try-run 'camelCase
-  (add-hook 'find-file-hook 'camelCase-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
