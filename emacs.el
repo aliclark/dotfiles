@@ -508,6 +508,28 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Reviewy
+
+(defun mybar (job)
+  (interactive "M")
+  (let* ((fixes (shell-do "p4 fixes -j " job))
+          (lines (split-string fixes "\n"))
+          (changes (mapcar (function (lambda (s) (if (string-match ".*fixed by change \\([0-9]+\\).*" s) (match-string 1 s) nil))) lines))
+          )
+
+    (mapcar
+      (function
+        (lambda (s)
+          (when s
+            (let ((lg (shell-do "git log --pretty=format:%b%H | grep -C 1 " s)))
+              ;; split into three lines take the last line.
+              (message (caddr (split-string lg "\n")))))))
+      changes)
+    
+  ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (message ".emacs loaded in %ds"
   (destructuring-bind (hi lo ms) (current-time)
     (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
