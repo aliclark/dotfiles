@@ -43,7 +43,7 @@
             `(define-key *root-map* (kbd ,key) ,sname))
           keys))))
 
-(defror iceweasel "C-f" "f")
+(defror conkeror "C-f" "f")
 (defror spotify "C-r")
 (defror xterm "C-c" "c")
 
