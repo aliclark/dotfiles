@@ -186,27 +186,17 @@ fi
 
 ###############################################################################
 
-if [ -n "$DISPLAY" ]; then
-  if [ -z "$INITIAL_XTERM_LVL" ]; then
-    INITIAL_XTERM_LVL="$SHLVL"
-    if [ $SHLVL -eq "$INITIAL_XTERM_LVL" ]; then
-      if [ -z "$STARTED_XTERM_SCREEN" ]; then
-        export STARTED_XTERM_SCREEN=1
-        # screen
-      fi
-    fi
-  fi
+if [ $SHLVL -eq "1" ]; then
+    screen
 else
-
-if [ -z "1" ]; then # temporarily disable screen in vterm
-
-  if [ $SHLVL -eq "1" ]; then
-    if [ -z "$STARTED_LOGIN_SCREEN" ]; then
-      export STARTED_LOGIN_SCREEN=1
-      # screen
+    if [ -z "$STARTED_XTERM_SCREEN" ]; then
+        if [ $SHLVL -eq "2" ]; then
+            # SHLVL 2 is just inside the console screen, don't reattach
+            echo '' > /dev/null
+        else
+            # reattach, but prevent child shells from attaching further
+            export STARTED_XTERM_SCREEN=1
+            screen -x
+        fi
     fi
-  fi
-
-fi
-
 fi
