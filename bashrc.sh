@@ -186,17 +186,15 @@ fi
 
 ###############################################################################
 
-if [ $SHLVL -eq "1" ]; then
-    screen
-else
-    if [ -z "$STARTED_XTERM_SCREEN" ]; then
-        if [ $SHLVL -eq "2" ]; then
-            # SHLVL 2 is just inside the console screen, don't reattach
-            echo '' > /dev/null
-        else
-            # reattach, but prevent child shells from attaching further
+if pgrep screen > /dev/null; then
+    if [ $SHLVL -eq "2" ]; then
+        echo '' > /dev/null
+    else
+        if [ -z "$STARTED_XTERM_SCREEN" ]; then
             export STARTED_XTERM_SCREEN=1
             screen -x
         fi
     fi
+else
+    screen
 fi
