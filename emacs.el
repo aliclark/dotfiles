@@ -148,6 +148,11 @@ of an error, just add the package to a list of missing packages."
   vc-follow-sym       t
   vc-suppress-confirm t)
 
+(autoload 'magit-status "magit" nil t)
+
+(eval-after-load "vc-hooks"
+         '(define-key vc-prefix-map "=" 'ediff-revision))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (try-require 'php-mode)
@@ -473,16 +478,16 @@ of an error, just add the package to a list of missing packages."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-to-list 'load-path "~/.emacs.d/")
-(try-run 'auto-complete-config
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
-  (ac-config-default)
-  (define-key ac-complete-mode-map "\t" 'ac-complete)
-  (define-key ac-complete-mode-map "\r" nil)
+;(add-to-list 'load-path "~/.emacs.d/")
+;(try-run 'auto-complete-config
+;  (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+;  (ac-config-default)
+;  (define-key ac-complete-mode-map "\t" 'ac-complete)
+;  (define-key ac-complete-mode-map "\r" nil))
 
-  (setq ac-auto-start t)
-  (setq ac-delay 0.1)
-  (setq ac-show-menu-immediately-on-auto-complete t))
+(setq ac-auto-start t)
+(setq ac-delay 0.1)
+(setq ac-show-menu-immediately-on-auto-complete t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -499,6 +504,28 @@ of an error, just add the package to a list of missing packages."
 
 ;  (try-run 'flymake-for-csharp
 ;    (add-hook 'csharp-mode-hook 'flymake-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Reviewy
+
+(defun mybar (job)
+  (interactive "M")
+  (let* ((fixes (shell-do "p4 fixes -j " job))
+          (lines (split-string fixes "\n"))
+          (changes (mapcar (function (lambda (s) (if (string-match ".*fixed by change \\([0-9]+\\).*" s) (match-string 1 s) nil))) lines))
+          )
+
+    (mapcar
+      (function
+        (lambda (s)
+          (when s
+            (let ((lg (shell-do "git log --pretty=format:%b%H | grep -C 1 " s)))
+              ;; split into three lines take the last line.
+              (message (caddr (split-string lg "\n")))))))
+      changes)
+    
+  ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

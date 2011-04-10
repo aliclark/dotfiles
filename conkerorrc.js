@@ -168,6 +168,7 @@ define_webjump("weather", "http://www.wunderground.com/cgi-bin/findweather/getFo
 
 
 define_mime_type_external_handler("application/msword", "openoffice.org");
+define_mime_type_external_handler("application/vnd.ms-powerpoint", "openoffice.org");
 
 
 //user_pref('extensions.mozrepl.autoStart', true);
