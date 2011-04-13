@@ -186,7 +186,7 @@ fi
 
 ###############################################################################
 
-if pgrep screen > /dev/null; then
+if pgrep -x screen > /dev/null; then
     if [ $SHLVL -eq "2" ]; then
         echo '' > /dev/null
     else
