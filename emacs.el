@@ -94,7 +94,9 @@ of an error, just add the package to a list of missing packages."
 (when-disable tool-bar-mode)
 (when-disable menu-bar-mode)
 
-(setq-all inhibit-startup-message t)
+(setq-all
+  inhibit-startup-message t
+  initial-scratch-message "\n")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
