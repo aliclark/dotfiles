@@ -106,7 +106,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    red='\e[0;31m'
+    red='\e[1;31m'
     green='\e[0;32m'
     host_font='\e[1;33m'
     pwd_font='\e[1;36m'
