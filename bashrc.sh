@@ -116,9 +116,9 @@ if [ "$color_prompt" = yes ]; then
     # return value visualisation
     PROMPT_COMMAND='ret=$?;curgitval=`git-br-current`'
 
-    return_value='$(if [[ $ret = 0 ]]; then echo -ne "\[$green\] "; else echo -ne "\[$red\]$ret"; fi;)'
-    curgit='$(echo -ne "$curgitval";)'
-    PS1="$return_value \[$host_font\]\h \[$pwd_font\]\w \[$git_font\]$curgit\[$command_font\] "
+    return_value='$(if [[ $ret = 0 ]]; then echo -ne "\[$green\]   "; else echo -ne "\[$red\]`printf "%3d" $ret`\[$command_font\]"; fi;)'
+    curgit='$(if [[ $curgitval = "" ]]; then echo -ne ""; else echo -ne "\[$command_font\] \[$git_font\]$curgitval"; fi;)'
+    PS1="$return_value \[\e[1;32m\]\t\[$command_font\] \[$host_font\]\h\[$command_font\] \[$pwd_font\]\w$curgit\[$command_font\] "
 else
     PS1=' \h \w '
 fi
