@@ -33,8 +33,8 @@ if [ -d "$HOME/projects/localscripts" ]; then
     PATH="$HOME/projects/localscripts:$PATH"
 fi
 
-if [ -d "$HOME/projects/utalities" ]; then
-    PATH="$HOME/projects/utalities:$PATH"
+if [ -d "$HOME/projects/utalities/bin" ]; then
+    PATH="$HOME/projects/utalities/bin:$PATH"
 fi
 
 export PATH
