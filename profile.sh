@@ -12,6 +12,12 @@
 
 ###############################################################################
 
+if [ -f "$HOME/.profile-ant" ]; then
+  . "$HOME/.profile-ant"
+fi
+
+###############################################################################
+
 PATH="$PATH:/usr/sbin:/sbin"
 
 # set PATH so it includes user's private bin if it exists
@@ -23,8 +29,12 @@ if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
 
-if [ -f "$HOME/.profile-ant" ]; then
-  . "$HOME/.profile-ant"
+if [ -d "$HOME/projects/localscripts" ]; then
+    PATH="$HOME/projects/localscripts:$PATH"
+fi
+
+if [ -d "$HOME/projects/utalities/bin" ]; then
+    PATH="$HOME/projects/utalities/bin:$PATH"
 fi
 
 export PATH
