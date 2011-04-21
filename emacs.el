@@ -392,6 +392,7 @@ of an error, just add the package to a list of missing packages."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(jira-url "http://jira/rpc/xmlrpc")
  '(js2-allow-keywords-as-property-names nil)
  '(js2-auto-insert-catch-block nil)
  '(js2-bounce-indent-p t)
@@ -674,12 +675,6 @@ and their terminal equivalents.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(message ".emacs loaded in %ds"
-  (destructuring-bind (hi lo ms) (current-time)
-    (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (setq-all display-buffer-reuse-frames 't)
 
 ;;;---------------------------------------------------------------------
@@ -710,6 +705,16 @@ and their terminal equivalents.")
 
 (setq display-buffer-function 'my-display-buffer-function)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-require 'jira)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(message ".emacs loaded in %ds"
+  (destructuring-bind (hi lo ms) (current-time)
+    (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
