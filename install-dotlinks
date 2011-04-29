@@ -11,8 +11,8 @@ do
 
         if [ -e ~/.$dotbase ]
         then
-            echo "Moving ~/.$dotbase to ~/.$dotbase.backup"
-            mv ~/.$dotbase ~/.$dotbase.backup
+            echo "Removing old ~/.$dotbase"
+            rm -f ~/.$dotbase
         fi
 
         ln -s `pwd`/$file ~/.$dotbase
@@ -20,3 +20,25 @@ do
     fi
 done
 
+mv ~/.conkeror-mozrepl ~/.conkeror-mozrepl.js
+
+rm -f ~/.irssi
+rm -f ~/.irssi/irssi.config
+mkdir ~/.irssi
+if [ -e ~/.irssi/config ]
+then
+    echo "Removing old irssi"
+    rm -f ~/.irssi/config
+fi
+ln -s `pwd`/irssi.config ~/.irssi/config
+echo "irssi installed."
+
+rm -f ~/.xmonad
+mkdir ~/.xmonad
+if [ -e ~/.xmonad/xmonad.hs ]
+then
+    echo "Removing old xmonad"
+    rm -f ~/.xmonad/xmonad.hs
+fi
+ln -s `pwd`/xmonad.hs ~/.xmonad/xmonad.hs
+echo "xmonad installed."
