@@ -114,7 +114,7 @@ if [ "$color_prompt" = yes ]; then
     command_font=$green
 
     # return value visualisation
-    PROMPT_COMMAND='echo -ne "\033k$HOSTNAME `pwd` `git-br-current`\033\\";ret=$?;curgitval=`git-br-current`'
+    PROMPT_COMMAND='ret=$?;if [[ "$INSIDE_SCREEN" -eq "1" ]]; then echo -ne "\033k$HOSTNAME `pwd` `git-br-current`\033\\"; fi;curgitval=`git-br-current`'
 
     return_value='$(if [[ $ret = 0 ]]; then echo -ne "\[$green\]   "; else echo -ne "\[$red\]`printf "%3d" $ret`\[$command_font\]"; fi;)'
     curgit='$(if [[ $curgitval = "" ]]; then echo -ne ""; else echo -ne "\[$command_font\] \[$git_font\]$curgitval"; fi;)'
@@ -194,9 +194,9 @@ if pgrep -x screen > /dev/null; then
     else
         if [ -z "$STARTED_XTERM_SCREEN" ]; then
             export STARTED_XTERM_SCREEN=1
-            screen -x
+            INSIDE_SCREEN=1 screen -x
         fi
     fi
 else
-    screen
+    INSIDE_SCREEN=1 screen
 fi

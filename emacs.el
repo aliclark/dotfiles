@@ -66,7 +66,7 @@ of an error, just add the package to a list of missing packages."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq-all
-  scroll-margin 5
+;;  scroll-margin 5
 ;;  scroll-conservatively 100000
 ;;  scroll-preserve-screen-position 0
 )
@@ -120,6 +120,7 @@ of an error, just add the package to a list of missing packages."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/gitsum")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -391,6 +392,7 @@ of an error, just add the package to a list of missing packages."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(jira-url "http://jira/rpc/xmlrpc")
  '(js2-allow-keywords-as-property-names nil)
  '(js2-auto-insert-catch-block nil)
  '(js2-bounce-indent-p t)
@@ -600,6 +602,164 @@ of an error, just add the package to a list of missing packages."
 ; :charset 'utf-8)
 
 ;(setq elmo-search-default-engine 'mu)
+
+;(outline-minor-mode)
+
+;(add-hook 'c-mode-hook 'my-outline-mode-hook)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; find file at point
+;(require 'ffap)
+;; rebind C-x C-f and others to the ffap bindings (see variable ffap-bindings)
+;(ffap-bindings)
+;; C-u C-x C-f finds the file at point
+;;(setq ffap-require-prefix t)
+;; browse urls at point via w3m
+;;(setq ffap-url-fetcher 'w3m-browse-url)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; provide some dired goodies and dired-jump at C-x C-j
+;(load "dired-x")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;recentf
+;(require 'recentf)
+;(recentf-mode 1)
+;(setq recentf-max-saved-items 500)
+;(setq recentf-max-menu-items 60)
+;(global-set-key [(meta f12)] 'recentf-open-files)
+
+(defun xsteve-ido-choose-from-recentf ()
+  "Use ido to select a recently opened file from the `recentf-list'"
+  (interactive)
+  (let ((home (expand-file-name (getenv "HOME"))))
+    (find-file
+     (ido-completing-read "Recentf open: "
+                          (mapcar (lambda (path)
+                                    (replace-regexp-in-string home "~" path))
+                                  recentf-list)
+                          nil t))))
+
+;(global-set-key [(meta f11)] 'xsteve-ido-choose-from-recentf)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; save a list of open files in ~/.emacs.desktop
+;; save the desktop file automatically if it already exists
+(setq desktop-save 'if-exists)
+(desktop-save-mode 1)
+
+;; save a bunch of variables to the desktop file
+;; for lists specify the len of the maximal saved data also
+(setq desktop-globals-to-save
+      (append '((extended-command-history . 30)
+                (file-name-history        . 100)
+                (grep-history             . 30)
+                (compile-history          . 30)
+                (minibuffer-history       . 50)
+                (query-replace-history    . 60)
+                (read-expression-history  . 60)
+                (regexp-history           . 60)
+                (regexp-search-ring       . 20)
+                (search-ring              . 20)
+                (shell-command-history    . 50)
+                tags-file-name
+                register-alist)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;(setq ibuffer-shrink-to-minimum-size t)
+;(setq ibuffer-always-show-last-buffer nil)
+;(setq ibuffer-sorting-mode 'recency)
+;(setq ibuffer-use-header-line t)
+;(global-set-key [(f12)] 'ibuffer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;(setq-all split-height-threshold nil)
+;(setq-all split-width-threshold  80)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-require 'gitsum)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-require 'buffer-move)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar real-keyboard-keys
+  '(("M-<up>"        . "\M-[1;3A")
+    ("M-<down>"      . "\M-[1;3B")
+    ("M-<right>"     . "\M-[1;3C")
+    ("M-<left>"      . "\M-[1;3D")
+    ("C-<return>"    . "\C-j")
+    ("C-<delete>"    . "\M-[3;5~")
+    ("C-<up>"        . "\M-[1;5A")
+    ("C-<down>"      . "\M-[1;5B")
+    ("C-<right>"     . "\M-[1;5C")
+    ("C-<left>"      . "\M-[1;5D"))
+  "An assoc list of pretty key strings
+and their terminal equivalents.")
+
+(defun mykey (desc)
+  (or (and window-system (read-kbd-macro desc))
+      (or (cdr (assoc desc real-keyboard-keys))
+          (read-kbd-macro desc))))
+
+(defun select-next-window ()
+  "Switch to the next window" 
+  (interactive)
+  (select-window (next-window)))
+
+(defun select-previous-window ()
+  "Switch to the previous window" 
+  (interactive)
+  (select-window (previous-window)))
+
+(global-set-key (mykey "M-<right>") 'select-next-window)
+(global-set-key (mykey "M-<left>")  'select-previous-window)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq-all display-buffer-reuse-frames 't)
+
+;;;---------------------------------------------------------------------
+;;; display-buffer
+
+;; The default behaviour of `display-buffer' is to always create a new
+;; window. As I normally use a large display sporting a number of
+;; side-by-side windows, this is a bit obnoxious.
+;;
+;; The code below will make Emacs reuse existing windows, with the
+;; exception that if have a single window open in a large display, it
+;; will be split horisontally.
+
+(setq pop-up-windows nil)
+
+(defun my-display-buffer-function (buf not-this-window)
+  (if (and (not pop-up-frames)
+           (one-window-p)
+           (or not-this-window
+               (not (eq (window-buffer (selected-window)) buf)))
+           (> (frame-width) 162))
+      (split-window-horizontally))
+  ;; Note: Some modules sets `pop-up-windows' to t before calling
+  ;; `display-buffer' -- Why, oh, why!
+  (let ((display-buffer-function nil)
+        (pop-up-windows nil))
+    (display-buffer buf not-this-window)))
+
+(setq display-buffer-function 'my-display-buffer-function)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-require 'jira)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
