@@ -9,7 +9,7 @@ do
     then
         dotbase="${BASH_REMATCH[1]}"
 
-        if [ -e ~/.$dotbase ]
+        if [[ -f ~/.$dotbase || -L ~/.$dotbase ]]
         then
             echo "Removing old ~/.$dotbase"
             rm -f ~/.$dotbase
@@ -25,7 +25,7 @@ mv ~/.conkeror-mozrepl ~/.conkeror-mozrepl.js
 rm -f ~/.irssi
 rm -f ~/.irssi/irssi.config
 mkdir ~/.irssi
-if [ -e ~/.irssi/config ]
+if [[ -f ~/.irssi/config || -L ~/.irssi/config ]]
 then
     echo "Removing old irssi"
     rm -f ~/.irssi/config
@@ -35,7 +35,7 @@ echo "irssi installed."
 
 rm -f ~/.xmonad
 mkdir ~/.xmonad
-if [ -e ~/.xmonad/xmonad.hs ]
+if [[ -f ~/.xmonad/xmonad.hs || -L ~/.xmonad/xmonad.hs ]]
 then
     echo "Removing old xmonad"
     rm -f ~/.xmonad/xmonad.hs
