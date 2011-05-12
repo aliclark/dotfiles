@@ -23,6 +23,7 @@ define_webjump("antwiki", function (s) {
 }, $argument = "optional");
 
 
+define_key(text_keymap, 'C-w', 'cmd_deleteWordBackward');
 
 define_webjump("antmail", "http://cam-mail2k7/owa/");
 
