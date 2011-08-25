@@ -1,7 +1,8 @@
 
 startup_message off
-
 defscrollback   5000
-
 autodetach      off
-
+escape          ^za
+vbell           off
+hardstatus      alwayslastline
+hardstatus      string '%{= kG} %{=b kY}%H%{= kG}   %{=b kw}%?%-Lw%?%{=b kG}%n*%f %t%? (%u)%?%{=b kw}%?%+Lw%?'
