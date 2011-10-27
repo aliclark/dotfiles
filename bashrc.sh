@@ -188,15 +188,17 @@ fi
 
 ###############################################################################
 
+return
+
 if pgrep -x screen > /dev/null; then
     if [ $SHLVL -eq "2" ]; then
         echo '' > /dev/null
     else
         if [ -z "$STARTED_XTERM_SCREEN" ]; then
             export STARTED_XTERM_SCREEN=1
-            INSIDE_SCREEN=1 screen -x
+#            INSIDE_SCREEN=1 screen -x
         fi
     fi
-else
-    INSIDE_SCREEN=1 screen
+#else
+#    INSIDE_SCREEN=1 screen
 fi
