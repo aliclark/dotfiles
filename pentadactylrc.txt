@@ -1,0 +1,12 @@
+"1.0b7.2 "(created 2011/08/05 11:03:59)"
+
+loadplugins '\.(js|penta)$'
+group user
+set autocomplete=
+set defsearch=duckduckgo-html
+set editor=vim
+set guioptions=sb
+set noinsertmode
+set showtabline=never
+
+" vim: set ft=pentadactyl:

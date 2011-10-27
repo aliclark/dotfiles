@@ -7,6 +7,8 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+# same thing from the Arch default, not sure if it's needed
+[[ $- != *i* ]] && return
 
 ###############################################################################
 
