@@ -12,6 +12,9 @@
 
 ###############################################################################
 
+export EDITOR=emacs
+export BROWSER=firefox
+
 if [ -f "$HOME/.profile-ant" ]; then
   . "$HOME/.profile-ant"
 fi
@@ -37,8 +40,8 @@ if [ -d "$HOME/projects/utalities/bin" ]; then
     PATH="$HOME/projects/utalities/bin:$PATH"
 fi
 
-if [ -d "$HOME/android-sdk-linux_x86" ]; then
-    PATH="$HOME/android-sdk-linux_x86/tools:$HOME/android-sdk-linux_x86/platform-tools::$PATH"
+if [ -d "$HOME/build/android-sdk-linux_x86" ]; then
+    PATH="$HOME/build/android-sdk-linux_x86/tools:$HOME/build/android-sdk-linux_x86/platform-tools:$PATH"
 fi
 
 export PATH
