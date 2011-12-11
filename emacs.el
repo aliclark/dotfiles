@@ -7,6 +7,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(fset 'yes-or-no-p 'y-or-n-p)
+(define-key global-map "\C-h" 'backward-delete-char)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun try-require (feature)
   "Attempt to load a library or module. Return true if the
 library given as argument is successfully loaded. If not, instead
