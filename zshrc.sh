@@ -24,3 +24,5 @@ SAVEHIST=1000
 setopt appendhistory autocd extendedglob notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
+setopt nohup
+
