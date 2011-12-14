@@ -777,3 +777,5 @@ and their terminal equivalents.")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (put 'upcase-region 'disabled nil)
+
+(try-require 'alloy-mode)
