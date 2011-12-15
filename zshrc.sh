@@ -24,5 +24,62 @@ SAVEHIST=1000
 setopt appendhistory autocd extendedglob notify
 bindkey -e
 # End of lines configured by zsh-newuser-install
+
+autoload -U promptinit
+promptinit
+ 
+setopt completealiases
+
+autoload -U colors && colors
+
+eval `dircolors -b`
+
+setopt autopushd pushdminus pushdsilent pushdtohome
+setopt autocd
+setopt cdablevars
+setopt interactivecomments
+setopt nobanghist
+setopt noclobber
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_DUPS
+setopt SH_WORD_SPLIT
 setopt nohup
+setopt correctall
+
+export PS1="$(print '%{\e[1;34m%}%n%{\e[0m%}'):$(print '%{\e[0;34m%}%~%{\e[0m%}')$ "
+export PS2="$(print '%{\e[0;34m%}>%{\e[0m%}')"
+
+backward-delete-to-slash () {
+  local WORDCHARS=${WORDCHARS//\//}
+  zle .backward-delete-word
+}
+zle -N backward-delete-to-slash
+
+# Set up auto extension stuff
+alias -s html=$BROWSER
+alias -s org=$BROWSER
+alias -s com=$BROWSER
+alias -s net=$BROWSER
+alias -s png=feh
+alias -s jpg=feh
+alias -s sxw=libreoffice
+alias -s doc=libreoffice
+alias -s zip='unzip'
+alias -s gz='tar -xzvf'
+alias -s bz2='tar -xjvf'
+alias -s java=$EDITOR
+alias -s txt=$EDITOR
+alias -s c=$EDITOR
+alias -s js=$EDITOR
+alias -s scm=$EDITOR
+alias -s hs=$EDITOR
+
+# Normal aliases
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -A'
+alias lh='ll -h'
+alias lt='ll -t'
+alias lS='lh -S'
 
