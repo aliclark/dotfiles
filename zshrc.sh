@@ -36,7 +36,6 @@ eval `dircolors -b`
 
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt autocd
-setopt cdablevars
 setopt interactivecomments
 setopt nobanghist
 setopt noclobber
