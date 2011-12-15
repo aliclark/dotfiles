@@ -12,12 +12,17 @@
 
 ###############################################################################
 
+export SHELL=zsh
 export EDITOR=emacs
 export BROWSER=firefox
 
-if [ -f "$HOME/.profile-ant" ]; then
-  . "$HOME/.profile-ant"
+###############################################################################
+
+if [ -d "/usr/course/agm/gPy" ]; then
+    PYTHONPATH="/usr/course/agm/gPy:$PYTHONPATH"
 fi
+
+export PYTHONPATH
 
 ###############################################################################
 
