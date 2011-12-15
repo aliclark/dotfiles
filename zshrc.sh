@@ -46,8 +46,8 @@ setopt SH_WORD_SPLIT
 setopt nohup
 setopt correctall
 
-export PS1="$(print '%{\e[1;34m%}%n%{\e[0m%}'):$(print '%{\e[0;34m%}%~%{\e[0m%}')$ "
-export PS2="$(print '%{\e[0;34m%}>%{\e[0m%}')"
+export PS1="$(print '%{\e[1;32m%}%*%{\e[0m%} %{\e[1;33m%}%M%{\e[0m%} %{\e[1;36m%}%~%{\e[0m%} ')"
+export PS2="$(print '%{\e[1;32m%}>%{\e[0m%} ')"
 
 backward-delete-to-slash () {
   local WORDCHARS=${WORDCHARS//\//}
