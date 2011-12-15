@@ -44,7 +44,7 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_DUPS
 setopt SH_WORD_SPLIT
 setopt nohup
-setopt correctall
+setopt correct
 
 export PS1="%? $(print '%{\e[1;32m%}%*%{\e[0m%} %{\e[1;33m%}%m%{\e[0m%} %{\e[1;36m%}%~%{\e[0m%} ')"
 export PS2="$(print '%{\e[1;32m%}>%{\e[0m%} ')"
