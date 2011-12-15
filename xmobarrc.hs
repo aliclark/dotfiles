@@ -16,7 +16,7 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                        "-L", "-15", "-H", "-5",
                        "-l", "red", "-m", "orange", "-h", "green"]
                       600
-                    , Run Com "/usr/local/bin/chkdate" [] "chkdate" 10
+                    , Run Com "chkdate" [] "chkdate" 10
                     , Run Network "eth0" ["-L","0","-H","32","-l", "green", "--normal","orange","--high","red"] 40
                     ]
        , sepChar = "%"
