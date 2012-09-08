@@ -5,6 +5,7 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
        , position = TopW L 95
        , lowerOnStart = True
        , commands = [Run Cpu ["-L","10","-H","50","-l","green","--normal","orange","--high","red"] 10
+                    , Run Network "eth0" ["-L","0","-H","32","-l", "green", "--normal","orange","--high","red"] 40
                     , Run Network "eth1" ["-L","0","-H","32","-l", "green", "--normal","orange","--high","red"] 40
                     , Run Memory ["-t","Mem: <usedratio>%","-L","25","-H","50","-l","green","--normal","orange","--high","red"] 10
                     , Run StdinReader
@@ -17,10 +18,9 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                        "-l", "red", "-m", "orange", "-h", "green"]
                       60
                     , Run Com "chkdate" [] "chkdate" 10
-                    , Run Network "eth0" ["-L","0","-H","32","-l", "green", "--normal","orange","--high","red"] 40
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% %eth1% %memory% %battery% Date: %chkdate% "
+       , template = "%StdinReader% }{ %cpu% %eth0% %eth1% %memory% %battery% Date: %chkdate% "
        }
 
