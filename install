@@ -5,18 +5,21 @@ dotbase=''
 
 for file in ./*.*
 do
-    if [[ $file =~ $dotmatch ]]
+    if [[ -f $file ]]
     then
-        dotbase="${BASH_REMATCH[1]}"
+    	if [[ $file =~ $dotmatch ]]
+    	then
+        	dotbase="${BASH_REMATCH[1]}"
 
-        if [[ -f ~/.$dotbase || -L ~/.$dotbase ]]
-        then
-            echo "Removing old ~/.$dotbase"
-            rm -f ~/.$dotbase
-        fi
+        	if [[ -f ~/.$dotbase || -L ~/.$dotbase ]]
+        	then
+            		echo "Removing old ~/.$dotbase"
+            		rm -f ~/.$dotbase
+        	fi
 
-        ln -s `pwd`/$file ~/.$dotbase
-        echo "$dotbase installed."
+        	cp `pwd`/$file ~/.$dotbase
+        	echo "$dotbase installed."
+	fi
     fi
 done
 
@@ -31,7 +34,7 @@ then
     echo "Removing old irssi"
     rm -f ~/.irssi/config
 fi
-ln -s `pwd`/irssi.config ~/.irssi/config
+cp `pwd`/irssi.config ~/.irssi/config
 echo "irssi installed."
 
 rm -f ~/.xmonad
@@ -41,6 +44,6 @@ then
     echo "Removing old xmonad"
     rm -f ~/.xmonad/xmonad.hs
 fi
-ln -s `pwd`/xmonad.hs ~/.xmonad/xmonad.hs
+cp `pwd`/xmonad.hs ~/.xmonad/xmonad.hs
 echo "xmonad installed."
 
