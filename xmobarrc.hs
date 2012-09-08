@@ -15,7 +15,7 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                        "--", "-O", "", "-o", "",
                        "-L", "-15", "-H", "-5",
                        "-l", "red", "-m", "orange", "-h", "green"]
-                      600
+                      60
                     , Run Com "chkdate" [] "chkdate" 10
                     , Run Network "eth0" ["-L","0","-H","32","-l", "green", "--normal","orange","--high","red"] 40
                     ]
