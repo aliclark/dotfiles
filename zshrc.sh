@@ -13,6 +13,7 @@ zstyle ':completion:*' preserve-prefix '//[^/]##/'
 zstyle ':completion:*' select-prompt '%Sscrolling active: current selection at %p%s'
 zstyle ':completion:*' verbose true
 zstyle :compinstall filename '/home/ali/.zshrc'
+zstyle ':completion:*' expand true
 
 autoload -Uz compinit
 compinit
@@ -21,7 +22,9 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+
 setopt appendhistory autocd extendedglob notify
+
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
@@ -44,9 +47,8 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_DUPS
 setopt SH_WORD_SPLIT
 setopt nohup
-setopt correct
 
-export PS1="%? $(print '%{\e[1;32m%}%*%{\e[0m%} %{\e[1;33m%}%m%{\e[0m%} %{\e[1;36m%}%~%{\e[0m%} ')"
+export PS1="%? $(print '%{\e[1;32m%}%*%{\e[0m%} %{\e[1;33m%}%m%{\e[0m%} %{\e[1;32m%}%n%{\e[0m%} %{\e[1;36m%}%~%{\e[0m%} ')"
 export PS2="$(print '%{\e[1;32m%}>%{\e[0m%} ')"
 
 backward-delete-to-slash () {
@@ -82,3 +84,4 @@ alias lh='ll -h'
 alias lt='ll -t'
 alias lS='lh -S'
 
+bindkey "^o" expand-cmd-path
