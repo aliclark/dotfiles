@@ -778,3 +778,15 @@ and their terminal equivalents.")
 
 (put 'upcase-region 'disabled nil)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(try-require 'post)
+(add-to-list 'auto-mode-alist '("/tmp/mutt.*$" . post-mode))
+(add-hook 'mail-mode-hook 'turn-on-auto-fill)
+
+(add-hook 'post-mode-hook 
+  (lambda()
+    (auto-fill-mode t)    
+    (setq fill-column 72)))    ; rfc 1855 for usenet messages
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
