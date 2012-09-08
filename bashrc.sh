@@ -116,7 +116,7 @@ if [ "$color_prompt" = yes ]; then
     command_font=$green
 
     # return value visualisation
-    PROMPT_COMMAND='ret=$?;if [[ "$INSIDE_SCREEN" -eq "1" ]]; then echo -ne "\033k$HOSTNAME `pwd` `git-br-current`\033\\"; fi;curgitval=`git-br-current`'
+    PROMPT_COMMAND='ret=$?; if [[ -x /usr/local/bin/pwb ]]; then curgitval=`pwb`; else curgitval=""; fi; if [[ "$INSIDE_SCREEN" -eq "1" ]]; then echo -ne "\033k$HOSTNAME `pwd` $curgitval\033\\"; fi;'
 
     return_value='$(if [[ $ret = 0 ]]; then echo -ne "\[$green\]   "; else echo -ne "\[$red\]`printf "%3d" $ret`\[$command_font\]"; fi;)'
     curgit='$(if [[ $curgitval = "" ]]; then echo -ne ""; else echo -ne "\[$command_font\] \[$git_font\]$curgitval"; fi;)'
