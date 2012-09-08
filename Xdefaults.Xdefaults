@@ -6,3 +6,6 @@ XTerm*cutNewline: false
 
 XTerm*metaSendsEscape: true
 XTerm*eightBitInput: false
+
+XTerm*visualBell: false
+
