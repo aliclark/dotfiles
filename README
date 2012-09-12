@@ -1,11 +1,8 @@
 
-These files can be symlinked to from the home directory.
+These files can be symlinked or copied to the home directory.
 
-The bash script `install-dotlinks` does this automatically for each file.
+The shell script `install` copies the files across, deleting anything in its path.
 
-Only run `install-dotlinks` from within the dotfiles directory once you have moved it to where you wish.
+Only run `install` from within the dotfiles directory once you have moved it to where you wish.
 The script creates links for any files with an extension, so eg "./a.b" will be linked from "~/.a"
-
-The script appends any existing files with ".backup",
-potentially overwriting an existing file with that name.
 
